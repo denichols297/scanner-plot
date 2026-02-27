@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scanner Plot — Oneida, Herkimer & Madison Counties</title>
+  <meta name="description" content="Real-time emergency call map for Oneida, Herkimer, and Madison Counties, NY. Live scanner audio transcription with address plotting." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Leaflet.js -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Socket.IO -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"></script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- ====================================================================
+       TOP STATUS BAR
+  ===================================================================== -->
+  <header class="status-bar" id="statusBar">
+    <div class="status-bar__left">
+      <!-- Feed status indicator -->
+      <div class="feed-status" id="feedStatus">
+        <span class="feed-dot" id="feedDot"></span>
+        <span class="feed-label" id="feedLabel">Connecting…</span>
+      </div>
+      <!-- Active streams list -->
+      <div class="active-feeds">
+        <span class="active-feeds__label">MONITORING</span>
+        <span class="active-feeds__names">Oneida, Herkimer &amp; Madison Counties Public Safety</span>
+      </div>
+    </div>
+    <div class="status-bar__center">
+      <span class="app-title">⚡ SCANNER PLOT</span>
+    </div>
+    <div class="status-bar__right">
+      <div class="clock-block">
+        <div class="clock" id="clock">00:00:00</div>
+        <div class="clock-label">LOCAL 24H</div>
+      </div>
+      <div class="call-count-block">
+        <div class="call-count" id="callCount">0</div>
+        <div class="call-count-label">CALLS</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ====================================================================
+       MAIN LAYOUT
+  ===================================================================== -->
+  <main class="layout">
+    <!-- Map -->
+    <section class="map-container">
+      <div id="map"></div>
+
+      <!-- Legend overlay -->
+      <div class="map-legend">
+        <div class="legend-item">
+          <span class="legend-icon legend-fire">🔥</span><span>Fire</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-icon legend-police">🚔</span><span>Police</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-icon legend-medical">🚑</span><span>Medical</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-icon legend-other">⚠️</span><span>Other</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Side panel -->
+    <aside class="side-panel" id="sidePanel">
+      <div class="side-panel__header">
+        <h2>Live Calls</h2>
+        <span class="live-badge">LIVE</span>
+      </div>
+      <div class="side-panel__body" id="callList">
+        <div class="empty-state" id="emptyState">
+          <div class="empty-state__icon">📡</div>
+          <div class="empty-state__text">Waiting for calls…</div>
+          <div class="empty-state__sub">Calls will appear here as they are received</div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

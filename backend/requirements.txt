@@ -1,0 +1,9 @@
+flask>=3.0.0
+flask-socketio>=5.3.6
+flask-cors>=4.0.0
+eventlet>=0.35.0
+faster-whisper>=1.0.0
+requests>=2.31.0
+geopy>=2.4.1
+python-dotenv>=1.0.0
+numpy>=1.24.0
